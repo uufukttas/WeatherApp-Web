@@ -5,11 +5,15 @@ import { setWeather } from './weatherSlice';
 const Form = () => {
     const REQUEST_URL = 'http://api.openweathermap.org';
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
-        getWeatherData('London');
+        const fetchData = async () => {
+            await getWeatherData('London');
+        };
+
+        fetchData();
     }, []);
-    
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
