@@ -5,26 +5,6 @@ import { setWeather } from './weatherSlice';
 const Form = () => {
     const REQUEST_URL = 'http://api.openweathermap.org';
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            await getWeatherData('London');
-        };
-
-        fetchData();
-    }, []);
-
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        await getWeatherData(event.target[0].value);
-    };
-    const getLocationData = async (city: string) => {
-        const response = await fetch(`${REQUEST_URL}/geo/1.0/direct?q=${city}&appid=${process.env.REACT_APP_WEATHER_APP_ACCESS_KEY}`);
-        const data = await response.json();
-
-        return data[0];
-    };
     const getWeatherData = async (city: string) => {
         try {
             const location = await getLocationData(city);
@@ -38,6 +18,25 @@ const Form = () => {
             console.log(error);
         }
     };
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        await getWeatherData(event.target[0].value);
+    };
+    const getLocationData = async (city: string) => {
+        const response = await fetch(`${REQUEST_URL}/geo/1.0/direct?q=${city}&appid=${process.env.REACT_APP_WEATHER_APP_ACCESS_KEY}`);
+        const data = await response.json();
+
+        return data[0];
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await getWeatherData('London');
+        };
+    
+        fetchData();
+    }, [getWeatherData]); 
 
     return (
         <div className="max-w-sm mx-auto bg-white rounded p-6 shadow-md w-full">
