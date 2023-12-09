@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setWeather } from './weatherSlice';
 
 const Form = () => {
-    const REQUEST_URL = 'http://api.openweathermap.org';
+    const REQUEST_URL = 'https://api.openweathermap.org';
     const dispatch = useDispatch();
 
     const getWeatherData = useCallback(async (city: string) => {
